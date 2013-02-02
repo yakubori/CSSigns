@@ -14,13 +14,16 @@
 	<script type="text/javascript">
 $('#test').cssigns();
 $('#test').blur(function(e) {
-$(this).cssigns('render', 'This was the first error.');
+	$(this).cssigns('render', 'This was the first error.');
 });
 
 $('#nothertest').cssigns(); 
 $('#nothertest').blur(function(e) {
-$(this).cssigns('render', 'Here is another error.');
+	$(this).cssigns('render', 'Here is another error.');
 });
+setTimeout(function() {
+	$('#test').cssigns('remove');
+}, 10000);
 	</script>
 </body>
 </html>
