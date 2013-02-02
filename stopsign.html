@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stop Sign</title>
+<link rel="stylesheet" href="css/cssigns.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="js/jquery-cssigns.js"></script>
+</head>
+<body>
+	<h1>Stop!</h1>
+	<input type="text" id="test" name="test" placeholder="test me" />
+	<br/>
+	<input type="text" id="nothertest" name="nothertest" placeholder="test me too" />
+	<script type="text/javascript">
+$('#test').cssigns();
+$('#test').blur(function(e) {
+$(this).cssigns('render', 'This was the first error.');
+});
+
+$('#nothertest').cssigns(); 
+$('#nothertest').blur(function(e) {
+$(this).cssigns('render', 'Here is another error.');
+});
+	</script>
+</body>
+</html>
