@@ -36,12 +36,19 @@ div.cssigns_error:after {
 	margin-top: 15px;
 }
 
-span.cssigns_errorbang {
+span.cssigns_bang {
 	position: absolute;
-	color: white;
 	font-family: Arial;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 18px;
+}
+
+span.cssigns_warnbang {
+	color: black;
+}
+
+span.cssigns_errorbang {
+	color: white;
 }
 
 div.cssigns_overlay {

@@ -9,7 +9,7 @@
         prefix = 'cssigns_',
         error = $( '<div/>', {class: prefix+'error'} );
         sign = $('<div/>');
-        bang = $( '<span/>', {class: prefix+'errorbang'} ),
+        bang = $( '<span/>', {class: prefix+'bang'} ),
         overlay = $( '<div/>', {class: prefix+'overlay'} ),
         bigOverlay = $( '<div/>', {id: prefix+'big_overlay'} ),
         errmsg = $( '<span/>', {id: prefix+'errmsg'} );
@@ -61,9 +61,12 @@
 
         // The bang.
         var bang = data.bang;
+        bang.addClass(data.prefix+type+'bang');
         bang.text('!');
-        bang.css( 'top', sign.position().top - 2 );
-        bang.css( 'left', sign.position().left + 7 );
+        var bangTop = type == 'warn' ? sign.position().top + 2 : sign.position().top;
+        var bangLeft = sign.position().left + 7;
+        bang.css( 'top', bangTop );
+        bang.css( 'left', bangLeft );
         sign.after(bang);
 
         // overlay
