@@ -22,7 +22,13 @@ $('#nothertest').blur(function(e) {
 	$(this).cssigns('render', 'Here is another error.');
 });
 setTimeout(function() {
-	$('#test').cssigns('remove');
+	$('#test').cssigns('clear');
+}, 5000);
+setTimeout(function() {
+	$('#test').cssigns('render');
+}, 7000);
+setTimeout(function() {
+	$('#test').cssigns('destroy');
 }, 10000);
 	</script>
 </body>
