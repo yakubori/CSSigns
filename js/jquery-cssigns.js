@@ -7,13 +7,11 @@
         var $this = $(this),
         data = $this.data('cssigns'),
         prefix = 'cssigns_',
-        stopit = $('<div/>', {
-          class: prefix+'stopit'
-        });
-        bang = $('<span/>', {class: prefix+'stopbang'}),
-        overlay = $('<div/>', { class: prefix+'overlay'}),
-        bigOverlay = $('<div/>', {id: prefix+'big_overlay'}),
-        errmsg = $('<span/>', {id: prefix+'errmsg'});
+        stopit = $( '<div/>', {class: prefix+'stopit'} );
+        bang = $( '<span/>', {class: prefix+'stopbang'} ),
+        overlay = $( '<div/>', {class: prefix+'overlay'} ),
+        bigOverlay = $( '<div/>', {id: prefix+'big_overlay'} ),
+        errmsg = $( '<span/>', {id: prefix+'errmsg'} );
 
         if(!data) {
           $(this).data('cssigns', {
@@ -23,7 +21,7 @@
             overlay: overlay,
             bigOverlay: bigOverlay,
             errmsg: errmsg
-          });
+            });
         }
         console.log('initialized!');
         });
@@ -34,20 +32,24 @@
         var $this = $(this),
         data = $this.data('cssigns');
 
+        if(!data) {
+            $.error('Cannot render() an uninitialized CSSign.');
+        }
+
         var pos = $this.position();
         var width = $this.width();
         var stopit = data.stopit;
 
-        stopit.css('top', pos.top + 2);
-        stopit.css('left', pos.left + width + 10);
+        stopit.css( 'top', pos.top + 2 );
+        stopit.css( 'left', pos.left + width + 10 );
 
         $this.after(stopit);
 
         // The bang.
         var bang = data.bang;
         bang.text('!');
-        bang.css('top', stopit.position().top - 3);
-        bang.css('left', stopit.position().left + 6);
+        bang.css( 'top', stopit.position().top - 3 );
+        bang.css( 'left', stopit.position().left + 6 );
         stopit.after(bang);
 
         // overlay
@@ -70,15 +72,17 @@
             bigOverlay.show();
             errmsg.css('top', Y + 20);
             // Determine centering...
-            if( ( errmsg.width() / $(document).width() ) < .85 ) {
-            errmsg.css(
-              'left',
-              ( ($(document).width() / 2) - (errmsg.width() / 2) )
-              );
+            if( (errmsg.width() / $(document).width()) < .85 ) {
+            errmsg.css({
+              left: (($(document).width() / 2) - (errmsg.width() / 2))
+              });
             } else {
-              errmsg.css({left: (($(document).width() / 2) - (errmsg.width() / 2)) / 2, top: Y + 20});
+              errmsg.css({
+                left: (($(document).width() / 2) - (errmsg.width() / 2)) / 2, top: Y + 20
+                });
             }
             });
+        
         overlay.mouseout(function(e) {
             bigOverlay.hide();
             });
@@ -89,6 +93,10 @@
       return this.each(function() {
         var $this = $(this),
             data = $this.data('cssigns');
+
+        if(!data) {
+            $.error('Cannot clear() an uninitialized CSSign.');
+        }
 
         data.bigOverlay.remove();
         data.overlay.remove();
@@ -102,6 +110,10 @@
       return this.each(function() {
         var $this = $(this),
             data = $this.data('cssigns');
+
+        if(!data) {
+            $.error('Cannot destroy() an uninitialized CSSign.');
+        }
 
         $(window).unbind('.cssigns');
         $this.cssigns('clear');
