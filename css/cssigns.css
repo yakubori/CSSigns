@@ -1,68 +1,74 @@
 div.cssigns_stopit {
-	position:absolute;
-	width:20px; height:20px;
-	background-color:red;
-	color:white;
-	font-size:3em;
-	z-index:-1;
+	position: absolute;
+	width: 20px; height: 20px;
+	background-color: red;
+	color: white;
+	font-size: 3em;
+	z-index: -1;
 }
+
 div.cssigns_stopit:before {
-	content:"";
-	position:absolute;
-	width:8px;
-	height:0;
-	border-bottom:solid 5px red;
-	border-left:solid 6px white;
-	border-right:solid 6px white;
+	content: "";
+	position: absolute;
+	width: 8px;
+	height: 0;
+	border-bottom: solid 5px red;
+	border-left: solid 6px white;
+	border-right: solid 6px white;
 }
+
 div.cssigns_stopit:after {
-	content:"";
-	position:absolute;
-	width:8px;
-	height:0;
-	border-top:solid 5px red;
-	border-left:solid 6px white;
-	border-right:solid 6px white;
-	margin-top:15px;
+	content: "";
+	position: absolute;
+	width: 8px;
+	height: 0;
+	border-top: solid 5px red;
+	border-left: solid 6px white;
+	border-right: solid 6px white;
+	margin-top: 15px;
 }
+
 span.cssigns_stopbang {
-	position:absolute;
-	color:white;
-	font-weight:bold;
-	font-size:23px;
+	position: absolute;
+	color: white;
+	font-weight: bold;
+	font-size: 23px;
 }
+
 div.cssigns_overlay {
-	position:absolute;
-	background-color:transparent;
-	width:20px; height:20px;
-	cursor:pointer;
-	z-index:101;
+	position: absolute;
+	background-color: transparent;
+	width: 20px; height: 20px;
+	cursor: pointer;
+	z-index: 101;
 }
+
 #cssigns_big_overlay {
 	position: absolute;
 	top: 0; left: 0;
 	background: rgba(0,0,0,.75);
-	width:100%;
-	height:100%;
-	z-index:100;
-	display:none;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	display: none;
 }
+
 #cssigns_errmsg {
-	position:absolute;
+	position: absolute;
 	padding: 8px;
-	max-width:85%;
+	max-width: 85%;
 	background-color: white;
 	color: #771414;
-	font-weight:bold;
-	letter-spacing:1px;
-	border:solid 1px black;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px
-	-o-border-radius:10px;
-	border-radius:10px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	border: solid 1px black;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px
+	-o-border-radius: 10px;
+	border-radius: 10px;
 	-moz-box-shadow: inset 0 0 1px 1px red;
 	-webkit-box-shadow: inset 0 0 1px 1px red;
 	box-shadow: inset 0 0 1px 1px red;
-	display:inherit;
-	z-index:102;
+	display: inherit;
+	z-index: 102;
 }
