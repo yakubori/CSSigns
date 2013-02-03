@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html charset="utf-8">
 <head>
 <title>Stop Sign</title>
 <link rel="stylesheet" href="css/cssigns.css" />
@@ -11,15 +11,22 @@
 <input type="text" id="test" name="test" placeholder="test me" />
 <br/>
 <input type="text" id="nothertest" name="nothertest" placeholder="test me too" />
+<br/>
+<input type="text" id="onemoretest" name="onemoretest" placeholder="test me with warn" />
 <script type="text/javascript">
 $('#test').cssigns();
 $('#test').blur(function(e) {
-    $(this).cssigns('render', 'This was the first error.');
+    $(this).cssigns('error', 'This was the first error.');
     });
 
 $('#nothertest').cssigns(); 
 $('#nothertest').blur(function(e) {
-    $(this).cssigns('render', 'Here is another error.');
+    $(this).cssigns('error', 'Here is another error.');
+    });
+
+$('#onemoretest').cssigns(); 
+$('#onemoretest').blur(function(e) {
+    $(this).cssigns('warn', 'Here is a warning.');
     });
 
 setTimeout(function() {
@@ -27,7 +34,7 @@ setTimeout(function() {
     }, 5000);
 
 setTimeout(function() {
-    $('#test').cssigns('render');
+    $('#test').cssigns('error');
     }, 7000);
 
 setTimeout(function() {

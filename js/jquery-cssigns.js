@@ -7,8 +7,9 @@
         var $this = $(this),
         data = $this.data('cssigns'),
         prefix = 'cssigns_',
-        stopit = $( '<div/>', {class: prefix+'stopit'} );
-        bang = $( '<span/>', {class: prefix+'stopbang'} ),
+        error = $( '<div/>', {class: prefix+'error'} );
+        sign = $('<div/>');
+        bang = $( '<span/>', {class: prefix+'errorbang'} ),
         overlay = $( '<div/>', {class: prefix+'overlay'} ),
         bigOverlay = $( '<div/>', {id: prefix+'big_overlay'} ),
         errmsg = $( '<span/>', {id: prefix+'errmsg'} );
@@ -16,7 +17,8 @@
         if(!data) {
           $(this).data('cssigns', {
             prefix: prefix,
-            stopit: stopit,
+            error: error,
+            sign: sign,
             bang: bang,
             overlay: overlay,
             bigOverlay: bigOverlay,
@@ -27,36 +29,48 @@
         });
     },
     
-    render: function(content) {
+    render: function(type, content) {
       return this.each(function() {
         var $this = $(this),
         data = $this.data('cssigns');
 
         if(!data) {
-            $.error('Cannot render() an uninitialized CSSign.');
+          $.error('Cannot call render() on an uninitialized CSSign.');
         }
 
+        var types = ['warn', 'error'];
+
+        if( $.inArray(type.toLowerCase(), types) < 0 ) {
+          $.error('Invalid type argument in render(): '+type);
+        }
+        
         var pos = $this.position();
         var width = $this.width();
-        var stopit = data.stopit;
+        var error = data.error;
+        var sign = data.sign;
+        var signClass = data.prefix+type;
+        console.log('rendering: '+signClass);
 
-        stopit.css( 'top', pos.top + 2 );
-        stopit.css( 'left', pos.left + width + 10 );
+        sign.addClass(signClass);
+        sign.css({
+          top: (pos.top + 2),
+          left: (pos.left + width + 10)
+          });
 
-        $this.after(stopit);
+        $this.after(sign);
 
         // The bang.
         var bang = data.bang;
         bang.text('!');
-        bang.css( 'top', stopit.position().top - 3 );
-        bang.css( 'left', stopit.position().left + 6 );
-        stopit.after(bang);
+        bang.css( 'top', sign.position().top - 2 );
+        bang.css( 'left', sign.position().left + 7 );
+        sign.after(bang);
 
         // overlay
         var overlay = data.overlay;
         overlay.css({
-          top: stopit.position().top,
-          left: stopit.position().left
+          top: sign.position().top,
+          left: sign.position().left
           });
         $('body').append(overlay);
 
@@ -88,6 +102,32 @@
             });
         });
     },
+
+    warn: function(content) {
+      return this.each(function() {
+        var $this = $(this),
+            data = $this.data('cssigns');
+
+        if(!data) {
+          $.error('Cannot call warn() on an uninitialized CSSign.');
+        }
+
+        $this.cssigns('render', 'warn', content);
+        });
+    },
+    
+    error: function(content) {
+      return this.each(function() {
+        var $this = $(this),
+            data = $this.data('cssigns');
+
+        if(!data) {
+          $.error('Cannot call error() on an uninitialized CSSign.');
+        }
+
+        $this.cssigns('render', 'error', content);
+        });
+    },
     
     clear: function() {
       return this.each(function() {
@@ -95,13 +135,14 @@
             data = $this.data('cssigns');
 
         if(!data) {
-            $.error('Cannot clear() an uninitialized CSSign.');
+            $.error('Cannot call clear() on an uninitialized CSSign.');
         }
 
         data.bigOverlay.remove();
         data.overlay.remove();
         data.bang.remove();
-        data.stopit.remove();
+        data.error.remove();
+        data.sign.remove();
         console.log('cleared');
         });
     },
@@ -112,7 +153,7 @@
             data = $this.data('cssigns');
 
         if(!data) {
-            $.error('Cannot destroy() an uninitialized CSSign.');
+            $.error('Cannot call destroy() on an uninitialized CSSign.');
         }
 
         $(window).unbind('.cssigns');
