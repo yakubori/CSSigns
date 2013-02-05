@@ -8,21 +8,23 @@
         data = $this.data('cssigns'),
         prefix = 'cssigns_',
         error = $( '<div/>', {class: prefix+'error'} );
+        content = '',
         sign = $('<div/>');
         bang = $( '<span/>', {class: prefix+'bang'} ),
         overlay = $( '<div/>', {class: prefix+'overlay'} ),
-        bigOverlay = $( '<div/>', {id: prefix+'big_overlay'} ),
-        errmsg = $( '<span/>', {id: prefix+'errmsg'} );
+        pageOverlayId = prefix+'page_overlay',
+        errmsgId = prefix+'errmsg';
 
         if(!data) {
           $(this).data('cssigns', {
             prefix: prefix,
             error: error,
+            content: content,
             sign: sign,
             bang: bang,
             overlay: overlay,
-            bigOverlay: bigOverlay,
-            errmsg: errmsg
+            pageOverlayId: pageOverlayId,
+            errmsgId: errmsgId
             });
         }
         console.log('initialized!');
@@ -38,6 +40,12 @@
           $.error('Cannot call render() on an uninitialized CSSign.');
         }
 
+        data.content = data.content ?
+            data.content :
+            content ?
+                content:
+                $.error('CSSigns render() requires a content agrument.');
+
         var types = ['warn', 'error'];
 
         if( $.inArray(type.toLowerCase(), types) < 0 ) {
@@ -50,6 +58,7 @@
         var sign = data.sign;
         var signClass = data.prefix+type;
         console.log('rendering: '+signClass);
+        console.log( $this.attr('id') +': '+ width );
 
         sign.addClass(signClass);
         sign.css({
@@ -77,31 +86,26 @@
           });
         $('body').append(overlay);
 
-        var bigOverlay = data.bigOverlay.append(data.errmsg);
-        $('body').append(bigOverlay);
-
-        var errmsg = data.errmsg;
-        errmsg.text(content);
+        // Manage rendering so the page overlay and error messages are not duplicated.
+        var pageOverlay = $('#'+data.pageOverlayId);
+        var errmsg = $('#'+data.errmsgId);
+        if(pageOverlay.length == 0) {
+            pageOverlay = $('<div/>', { id: data.pageOverlayId });
+            errmsg = $('<div/>', { id: data.errmsgId });
+            pageOverlay.append(errmsg);
+            $('body').append(pageOverlay);
+        }
 
         overlay.mouseover(function(e) {
             var X = e.pageX;
             var Y = e.pageY;
-            bigOverlay.show();
+            errmsg.text(data.content);
+            pageOverlay.show();
             errmsg.css('top', Y + 20);
-            // Determine centering...
-            if( (errmsg.width() / $(document).width()) < .85 ) {
-            errmsg.css({
-              left: (($(document).width() / 2) - (errmsg.width() / 2))
-              });
-            } else {
-              errmsg.css({
-                left: (($(document).width() / 2) - (errmsg.width() / 2)) / 2, top: Y + 20
-                });
-            }
             });
         
         overlay.mouseout(function(e) {
-            bigOverlay.hide();
+            pageOverlay.hide();
             });
         });
     },
@@ -141,10 +145,9 @@
             $.error('Cannot call clear() on an uninitialized CSSign.');
         }
 
-        data.bigOverlay.remove();
+        $('#'+data.pageOverlayId).hide();
         data.overlay.remove();
         data.bang.remove();
-        data.error.remove();
         data.sign.remove();
         console.log('cleared');
         });
