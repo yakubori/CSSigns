@@ -1,4 +1,4 @@
 CSSigns
 =======
 
-Add interactive dialog indicators using CSS shapes.
+Interactive dialog indicators using CSS shapes.
