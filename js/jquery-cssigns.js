@@ -4,6 +4,10 @@
 
     init: function(options) {
       return this.each(function() {
+        var tag = this.tagName.toLowerCase();
+        if(tag != 'input') {
+            $.error('Sorry. CSSign only supports input elements at this time.');
+        }
         var $this = $(this),
         data = $this.data('cssigns'),
         prefix = 'cssigns_',
@@ -17,6 +21,7 @@
 
         if(!data) {
           $(this).data('cssigns', {
+            tag: tag,
             prefix: prefix,
             error: error,
             content: content,
